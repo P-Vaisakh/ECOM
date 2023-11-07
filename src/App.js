@@ -4,7 +4,7 @@ import Home from "./Pages/Home";
 import Cart from "./Pages/Cart";
 import Header from "./Components/Header";
 import Wishlist from "./Pages/Wishlist";
-import Checkout from "./Pages/Checkout";
+import Pnf from "./Pages/Pnf";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/cart" element={<Cart></Cart>}></Route>
         <Route path="/wishlists" element={<Wishlist></Wishlist>}></Route>
-        <Route path="/checkout" element={<Checkout></Checkout>}></Route>
+        <Route path="*" element={<Pnf></Pnf>}></Route>
       </Routes>
       {/* <Footer></Footer> */}
     </>

@@ -19,36 +19,31 @@ import { addToCart } from "../Redux/CartSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addToWishlist, removeFromWishlist } from "../Redux/wishlistSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import  {fetchProducts}  from "../Redux/ProductsSlice";
 
 const ItemCard = () => {
-  const wishlist = useSelector((state) => state.wishlist);
-
-  const [products, setproducts] = useState([]);
-
   const dispatch = useDispatch();
 
-  const fetchTrending = async () => {
-    const { data } = await axios.get("https://fakestoreapi.com/products");
-    setproducts(data);
-  };
+   const { allProducts } = useSelector((state) => state.ProductsSlice);
+
+  const wishlist = useSelector((state) => state.wishlist);
 
   useEffect(() => {
-    fetchTrending();
+    dispatch(fetchProducts());
   }, []);
 
-   const addItem = (item) => {
-     if (!wishlist.find((favorite) => favorite.id === item.id)) {
-       dispatch(addToWishlist(item));
-     } else {
-       dispatch(removeFromWishlist(item.id))
-     }
-   };
+  const addItem = (item) => {
+    if (!wishlist.find((favorite) => favorite.id === item.id)) {
+      dispatch(addToWishlist(item));
+    } else {
+      dispatch(removeFromWishlist(item.id));
+    }
+  };
 
   return (
     <Grid container spacing={4} justifyContent={"center"}>
-      {products.length > 0 ? (
-        products.map((item, index) => (
+      {allProducts.length > 0 ? (
+        allProducts.map((item, index) => (
           <Grid item xs={9} md={4} lg={3} key={index}>
             <Card
               sx={{
@@ -57,10 +52,11 @@ const ItemCard = () => {
                 position: "relative",
                 color: "rgb(0,0,0,0.87)",
               }}
+              elevation={1}
             >
               <CardMedia
                 title={item.title}
-                sx={{ height: {xs:"200px",md:"300px"}, width: "100%" }}
+                sx={{ height: { xs: "200px", md: "300px" }, width: "100%" }}
               >
                 <img
                   src={item.image}
@@ -72,7 +68,7 @@ const ItemCard = () => {
                   }}
                 />
               </CardMedia>
-              <CardContent sx={{ textAlign: "start", p: "2px",mt:{xs:2} }}>
+              <CardContent sx={{ textAlign: "start", p: "2px", mt: { xs: 2 } }}>
                 <Typography
                   fontWeight={300}
                   variant="h6"
@@ -121,16 +117,20 @@ const ItemCard = () => {
                 disableRipple
                 onClick={() => addItem(item)}
               >
-                {
-                  !wishlist.find((favorite) => favorite.id === item.id)?
-                  <FavoriteBorderIcon></FavoriteBorderIcon>:
-                  <FavoriteIcon/>}
+                {!wishlist.find((favorite) => favorite.id === item.id) ? (
+                  <FavoriteBorderIcon></FavoriteBorderIcon>
+                ) : (
+                  <FavoriteIcon />
+                )}
               </Button>
             </Card>
           </Grid>
         ))
       ) : (
-       <Box minHeight={"100vh"}> <CircularProgress /></Box>
+        <Box minHeight={"100vh"}>
+          {" "}
+          <CircularProgress sx={{mt:10}}/>
+        </Box>
       )}
     </Grid>
   );

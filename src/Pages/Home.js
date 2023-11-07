@@ -5,12 +5,13 @@ import {
   Stack,
   ThemeProvider,
   Typography,
-  createTheme,
+  createTheme, TextField,
 } from "@mui/material";
 import React from "react";
 import ItemCard from "../Components/ItemCard";
-import Alert from "@mui/material/Alert";
 import Footer from "../Components/Footer";
+import { useDispatch } from "react-redux";
+import { searchProduct } from "../Redux/ProductsSlice";
 
 
 const darkTheme = createTheme({
@@ -23,6 +24,7 @@ const darkTheme = createTheme({
 });
 
 const Home = () => {
+  const dispatch=useDispatch()
   return (
     <ThemeProvider theme={darkTheme}>
       <Stack
@@ -57,14 +59,21 @@ const Home = () => {
             id. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel,
             debitis?
           </Typography>
-          <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+          <Button variant="contained" color="primary" sx={{ mt: 2 }} href="#products">
             Explore
           </Button>
         </Box>
         <img src="/img/cover.png" alt="" className="hero_img" />
       </Stack>
-      <Container sx={{ my: 8 }}>
-        <Typography variant="h4" color="inherit" mb={7} mt={5} textAlign={"center"}>Products</Typography>
+      <Container sx={{ my: 8 ,textAlign:"center"}} id="products">
+        <Typography variant="h4" color="inherit" mt={5} mb={3} textAlign={"center"}>Products</Typography>
+        <TextField
+        fullWidth
+        sx={{mb:5}}
+          label="Search for a Product"
+          onChange={(e)=>dispatch(searchProduct(e.target.value))}
+          
+        />
         <ItemCard></ItemCard>
       </Container>
       <Footer />

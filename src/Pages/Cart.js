@@ -21,7 +21,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
-import { removeFromCart } from "../Redux/CartSlice";
+import { clearCart, removeFromCart } from "../Redux/CartSlice";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 
 const dark = createTheme({
@@ -48,7 +48,8 @@ const Cart = () => {
   };
 
   const handleClose = (value) => {
-    setOpen(false);
+    setOpen(value);
+    dispatch(clearCart())
   };
 
   const dispatch = useDispatch();
@@ -225,7 +226,7 @@ const Cart = () => {
             )}
           </DialogContent>
           <DialogActions sx={{p:3}}>
-            <Button onClick={() => setOpen(false)} color="success" variant="contained">
+            <Button onClick={() => handleClose(false)} color="success" variant="contained">
               Proceed to pay
             </Button>
           </DialogActions>

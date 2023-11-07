@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 
 const darkTheme=createTheme({
   palette:{
-    mode:"dark"
+    mode:"dark",
+    secondary:{main:"#ab003c"}
   }
 })
 
@@ -41,7 +42,7 @@ const Header = () => {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <IconButton color="inherit" disableRipple>
-                <Badge badgeContent={cart.length} color="info">
+                <Badge badgeContent={cart.length} color="secondary">
                   <ShoppingBagIcon  sx={{ mr: 0.5 }}></ShoppingBagIcon>
                   <Typography sx={{ fontWeight: "300",display: { xs: 'none', md: 'block' } }}>Bag</Typography>
                 </Badge>
@@ -49,7 +50,7 @@ const Header = () => {
             </Link>
            <Link to={"/wishlists"} style={{textDecoration:"none",color:"inherit"}}>
               <IconButton color="inherit" disableRipple>
-                <Badge badgeContent={wishlist.length} color="info">
+                <Badge badgeContent={wishlist.length} color="secondary">
                   <FavoriteIcon sx={{ marginRight:{md: 0.5} }}></FavoriteIcon>
                   <Typography sx={{ fontWeight: "300",display: { xs: 'none', md: 'block' }}} >Whishlist</Typography>
                 </Badge>
